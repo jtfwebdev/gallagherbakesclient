@@ -1,0 +1,103 @@
+import { useEffect, useState, createContext } from "react";
+import { Route, Routes } from 'react-router-dom';
+import Header from "./assets/Components/Header";
+import FetchProducts from './assets/Hooks/FetchProducts';
+import Home from "./assets/Components/Home";
+import Shop from "./assets/Components/Shop";
+import RoutingError from "./assets/Components/RoutingError";
+import LoginRegisterModal from "./assets/Components/LoginRegisterModal";
+import { AnimatePresence } from "framer-motion";
+import ScrollToTop from "./assets/Components/ScrollToTop";
+import Cart from "./assets/Components/Cart";
+import AccountPage from "./assets/Components/AccountPage";
+import axios from "axios";
+
+export const ScreenWidthContext = createContext(window.innerWidth);
+export const SessionContext = createContext(null);
+
+function App() {
+
+  const [sessionDetails, setSessionDetails] = useState<any>(null);
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
+  const [cartModalOpen, setCartModalOpen] = useState(false);
+
+  useEffect(() => {
+    const watchWidth = () => {
+      setScreenWidth(window.innerWidth)
+    }
+
+    if (localStorage.getItem('token')) {
+
+      const payload = {
+        token: localStorage.getItem('token'), 
+      }
+
+      const headers = {
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": true
+      }
+
+      axios.get(`${import.meta.env.VITE_API_URL}/user`, {
+        params: {
+          headers: headers,
+          query: payload
+        }})
+        .then((res) => {
+          setSessionDetails(res.data.userDetails[0][0])
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
+
+    window.addEventListener("resize", watchWidth);
+
+    return () => {
+      window.removeEventListener("resize", watchWidth);
+    }
+  }, [])
+
+  useEffect(() => {
+    const watchStorage = () => {
+      if (!localStorage.getItem('token')) {
+        setSessionDetails(null)
+      }
+    }
+
+    window.addEventListener("storage", watchStorage);
+    return () => window.removeEventListener("storage", watchStorage)
+  }, [])
+
+  const [menuOpen, setMenuOpen] = useState<Boolean>(false);
+  const [products, setProducts] = useState<any[] | null>(null);
+
+  useEffect(() => {
+    FetchProducts(setProducts);
+  }, [])
+
+  return(
+    <>
+      <SessionContext.Provider value={sessionDetails}>
+      <ScreenWidthContext.Provider value={screenWidth}>
+        <Header menuOpen={menuOpen} setMenuOpen={setMenuOpen} setLoginModalOpen={setLoginModalOpen} setCartModalOpen={setCartModalOpen} />
+        <AnimatePresence>
+          {loginModalOpen && <LoginRegisterModal setLoginModalOpen={setLoginModalOpen} setSessionDetails={setSessionDetails} />}
+        </AnimatePresence>
+        <AnimatePresence>
+          {cartModalOpen && <Cart setCartModalOpen={setCartModalOpen} />}
+        </AnimatePresence>
+        <ScrollToTop />
+        <Routes>
+          <Route index element={<Home products={products} />}></Route>
+          <Route path="/shop" element={<Shop products={products} />} ></Route>
+          <Route path="/myaccount" element={<AccountPage />}></Route>
+          <Route path="*" element={<RoutingError />}></Route>
+        </Routes>
+      </ScreenWidthContext.Provider>
+      </SessionContext.Provider>
+    </>
+  )
+}
+
+export default App
