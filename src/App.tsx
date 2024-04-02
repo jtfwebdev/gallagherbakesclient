@@ -91,7 +91,7 @@ function App() {
         <Routes>
           <Route index element={<Home products={products} />}></Route>
           <Route path="/shop" element={<Shop products={products} />} ></Route>
-          <Route path="/myaccount" element={<AccountPage />}></Route>
+          <Route path="/myaccount" element={<AccountPage setSessionDetails={setSessionDetails} />}></Route>
           <Route path="*" element={<RoutingError />}></Route>
         </Routes>
       </ScreenWidthContext.Provider>

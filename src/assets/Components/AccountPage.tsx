@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import PostUpdateShipping from '../Hooks/PostUpdateShipping'
 import UpdatePassword from '../Hooks/UpdatePassword';
 
-const AccountPage = () => {
+const AccountPage = ({setSessionDetails}) => {
 
     const buttonStyle = "w-full mx-auto text-white bg-secondary-100 hover:opacity-80 focus:ring-4 focus:outline-none focus:ring-secondary-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-secondary-100 dark:hover:bg-secondary-100 dark:focus:ring-primary-800";
     const returnButtonStyle = "w-full mx-auto text-white bg-secondaryBtn-100 hover:opacity-80 focus:ring-4 focus:outline-none focus:ring-secondary-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-secondary-100 dark:hover:bg-secondary-100 dark:focus:ring-primary-800"
@@ -18,11 +18,11 @@ const AccountPage = () => {
             case '':
                 return <AnimatePresence><ShippingInfo userDetails={userDetails} /></AnimatePresence>;
             case 'update shipping':
-                return <AnimatePresence><UpdateDetails userDetails={userDetails}>Shipping</UpdateDetails></AnimatePresence>;
+                return <AnimatePresence><UpdateDetails userDetails={userDetails} setSessionDetails={setSessionDetails} setActivePanel={setActivePanel} >Shipping</UpdateDetails></AnimatePresence>;
             case 'update billing':
-                return <AnimatePresence><UpdateDetails userDetails={userDetails}>Billing</UpdateDetails></AnimatePresence>;
+                return <AnimatePresence><UpdateDetails userDetails={userDetails} setSessionDetails={setSessionDetails} setActivePanel={setActivePanel} >Billing</UpdateDetails></AnimatePresence>;
             case 'change password':
-                return <AnimatePresence><ChangePassword userDetails={userDetails} /></AnimatePresence>
+                return <AnimatePresence><ChangePassword userDetails={userDetails} setActivePanel={setActivePanel} /></AnimatePresence>
         }
     }
 
@@ -97,7 +97,9 @@ const ShippingInfo = ({userDetails}) => {
     )
 }
 
-const UpdateDetails = ({children, userDetails}) => {
+const UpdateDetails = ({children, userDetails, setSessionDetails, setActivePanel}) => {
+
+    const [buttonText, setButtonText] = useState("Save");
 
     const field = children;
     const fieldCase = field.toLowerCase();
@@ -115,6 +117,8 @@ const UpdateDetails = ({children, userDetails}) => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        setButtonText("Saving...");
+
         const data = {
             [fieldCase]: {
                 userId: userDetails.id,
@@ -128,9 +132,7 @@ const UpdateDetails = ({children, userDetails}) => {
             }
         }
 
-        console.log(data)
-
-        PostUpdateShipping(data);
+        PostUpdateShipping(data, setButtonText, setSessionDetails, setActivePanel);
     }
 
     return(
@@ -200,13 +202,13 @@ const UpdateDetails = ({children, userDetails}) => {
                         onChange={(e) => setDetails(prev => ({firstName: prev.firstName, lastName: prev.lastName, address1: prev.address1, address2: prev.address2, city: prev.city, postcode: prev.postcode, contactNumber: e.target.value}))}
                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm text-end rounded-lg focus:ring-secondary-100 focus:border-secondary-100 block w-[70%] p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="text" />
                 </div>
-                <button type="submit" className="w-fit mt-4 text-white bg-secondary-100 hover:opacity-80 focus:ring-4 focus:outline-none focus:ring-secondary-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-secondary-100 dark:hover:bg-secondary-100 dark:focus:ring-primary-800">Save</button>
+                <button type="submit" className="w-fit mt-4 text-white bg-secondary-100 hover:opacity-80 focus:ring-4 focus:outline-none focus:ring-secondary-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-secondary-100 dark:hover:bg-secondary-100 dark:focus:ring-primary-800">{buttonText}</button>
             </form>
         </motion.div>
     )
 }
 
-const ChangePassword = ({userDetails}) => {
+const ChangePassword = ({userDetails, setActivePanel}) => {
 
     const [updateDetails, setUpdateDetails] = useState({
         password: "",
@@ -227,6 +229,8 @@ const ChangePassword = ({userDetails}) => {
             return;
         }
 
+        setButtonText("Saving...");
+
         const token = localStorage.getItem('token');
 
         const data = JSON.stringify({
@@ -237,7 +241,7 @@ const ChangePassword = ({userDetails}) => {
             newPassword: updateDetails.newPassword
         });
 
-        UpdatePassword(data);
+        UpdatePassword(data, setButtonText, setActivePanel);
 
     }
 
