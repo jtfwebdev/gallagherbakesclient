@@ -11,9 +11,11 @@ import ScrollToTop from "./assets/Components/ScrollToTop";
 import Cart from "./assets/Components/Cart";
 import AccountPage from "./assets/Components/AccountPage";
 import axios from "axios";
+import Product from "./assets/Components/Product";
 
 export const ScreenWidthContext = createContext(window.innerWidth);
 export const SessionContext = createContext(null);
+export const BasketContext = createContext([]);
 
 function App() {
 
@@ -21,6 +23,7 @@ function App() {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [cartModalOpen, setCartModalOpen] = useState(false);
+  const [basket, setBasket] = useState([]);
 
   useEffect(() => {
     const watchWidth = () => {
@@ -80,6 +83,7 @@ function App() {
     <>
       <SessionContext.Provider value={sessionDetails}>
       <ScreenWidthContext.Provider value={screenWidth}>
+      <BasketContext.Provider value={basket}>
         <Header menuOpen={menuOpen} setMenuOpen={setMenuOpen} setLoginModalOpen={setLoginModalOpen} setCartModalOpen={setCartModalOpen} />
         <AnimatePresence>
           {loginModalOpen && <LoginRegisterModal setLoginModalOpen={setLoginModalOpen} setSessionDetails={setSessionDetails} />}
@@ -91,9 +95,11 @@ function App() {
         <Routes>
           <Route index element={<Home products={products} />}></Route>
           <Route path="/shop" element={<Shop products={products} />} ></Route>
+          <Route path="/shop/:id" element={<Product products={products} setBasket={setBasket} />}></Route>
           <Route path="/myaccount" element={<AccountPage setSessionDetails={setSessionDetails} />}></Route>
           <Route path="*" element={<RoutingError />}></Route>
         </Routes>
+      </BasketContext.Provider>
       </ScreenWidthContext.Provider>
       </SessionContext.Provider>
     </>

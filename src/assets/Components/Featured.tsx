@@ -1,10 +1,44 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 const Featured = ({products}: {products: any[] | null}) => {
 
-    
+    const navigate = useNavigate();
+
+    const imgVars = {
+        initial: {
+            transition: {
+                duration: .5
+            }
+        },
+        hover: {
+            scale: 1.1,  
+            transition: {
+                duration: .5
+            }
+        }
+    }
+
+    const textVars = {
+        initial: {
+            transition: {
+                duration: .5
+            }
+        },
+        hover: {
+            fontWeight: "bold",
+            transition: {
+                duration: .5
+            }
+        }
+    }
+
+    const handleClick = (product) => {
+        navigate(`/shop/${product}`)
+    }
 
     return ( 
         <div className="
@@ -21,14 +55,16 @@ const Featured = ({products}: {products: any[] | null}) => {
 
                     if (idx < 4) {
                         return (
-                            <div key={idx} className="p-4 rounded flex flex-col">
-                                <img className="rounded" src={product.images[0].src} alt="" />
-                                <p className="text-secondary-100 font-text flex-1 flex items-center">{product.name}</p>
+                            <motion.div key={idx} className="p-4 rounded flex flex-col" initial="initial" whileHover="hover" onClick={() => handleClick(product.slug)}>
+                                <div className="overflow-hidden">
+                                    <motion.img className="rounded" src={product.images[0].src} alt="" variants={imgVars}  />
+                                </div>
+                                <motion.p className="text-secondary-100 font-text flex-1 flex items-center" variants={textVars}>{product.name}</motion.p>
                                 <div className="mt-2 flex items-center justify-between">
                                     <div className="text-secondary-100 font-text inline">£{product.price}</div>
                                     <FontAwesomeIcon className="text-secondary-100 text-lg p-2 hover:cursor-pointer hover:opacity-80 duration-150" icon={faCartPlus} />
                                 </div>
-                            </div>
+                            </motion.div>
                         )
                     } else return;
                 })}

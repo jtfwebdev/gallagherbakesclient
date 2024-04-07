@@ -1,7 +1,10 @@
 import { motion } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useContext } from 'react';
+import { BasketContext } from '../../App';
 
 const Cart = ({setCartModalOpen}: {setCartModalOpen: React.Dispatch<React.SetStateAction<boolean>>}) => {
+
+    const basket = useContext(BasketContext);
 
     const cartPanelRef = useRef(null);
 
@@ -30,6 +33,13 @@ const Cart = ({setCartModalOpen}: {setCartModalOpen: React.Dispatch<React.SetSta
         >
             <div ref={cartPanelRef} className="w-[80%] h-[70%] px-8 py-4 bg-white rounded-lg shadow dark:border dark:bg-gray-800 dark:border-gray-700">
                 <h2 className="font-text text-secondary-100 text-2xl mb-4 border-b-2 border-secondary-100 w-fit">Your Shopping Cart</h2>
+                <div>
+                    {basket && <div>
+                        {basket.map((product) => {
+
+                        })}
+                    </div>}
+                </div>
             </div>
         </motion.div>
      );

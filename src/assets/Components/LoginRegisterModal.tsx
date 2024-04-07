@@ -51,6 +51,8 @@ export default LoginRegisterModal;
 
 const LoginPanel = ({setSessionDetails, setLoginModalOpen, setRegisterPanelActive}) => {
 
+    const [buttonText, setButtonText] = useState("Sign in")
+
     const [form, setForm] = useState({
         email: "",
         password: ""
@@ -58,7 +60,7 @@ const LoginPanel = ({setSessionDetails, setLoginModalOpen, setRegisterPanelActiv
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        Login(form.email, form.password, setSessionDetails, setLoginModalOpen);
+        Login(form.email, form.password, setSessionDetails, setLoginModalOpen, setButtonText);
     }
 
     const handleSignUp = (e) => {
@@ -83,7 +85,7 @@ const LoginPanel = ({setSessionDetails, setLoginModalOpen, setRegisterPanelActiv
                   <div className="flex items-center justify-between">
                       <a href="#" className="text-sm font-medium text-secondary-100 hover:underline dark:text-secondary-100">Forgot password?</a>
                   </div>
-                  <button type="submit" className="w-full text-white bg-secondary-100 hover:opacity-80 focus:ring-4 focus:outline-none focus:ring-secondary-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-secondary-100 dark:hover:bg-secondary-100 dark:focus:ring-primary-800">Sign in</button>
+                  <button type="submit" className="w-full text-white bg-secondary-100 hover:opacity-80 focus:ring-4 focus:outline-none focus:ring-secondary-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-secondary-100 dark:hover:bg-secondary-100 dark:focus:ring-primary-800">{buttonText}</button>
                   <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                       Don’t have an account yet? <button type="button" onClick={(e) => handleSignUp(e)} className="font-medium text-secondary-100 hover:underline inline dark:text-secondary-100">Sign up</button>
                   </p>

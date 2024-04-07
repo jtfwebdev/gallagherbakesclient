@@ -1,7 +1,15 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 const Home = ({products}: {products: any[] | null}) => {
+
+    const navigate = useNavigate();
+
+    const handleClick = (product) => {
+        navigate(`/shop/${product}`)
+    }
+
     return ( 
         <div className="w-[80%] mx-auto h-fit mt-16">
             <h2 className="font-text text-secondary-100 text-2xl mb-4 border-b-2 border-secondary-100 w-fit">Shop at Gallagher Bakes</h2>
@@ -10,7 +18,7 @@ const Home = ({products}: {products: any[] | null}) => {
             ">
                 {products && products.map((product, idx) => {
                     return(
-                        <div key={idx} className="p-4 rounded flex flex-col">
+                        <div key={idx} className="p-4 rounded flex flex-col" onClick={() => handleClick(product.slug)}>
                             <img className="rounded" src={product.images[0].src} alt="" />
                             <p className="text-secondary-100 font-text flex-1 flex font-bold items-start">{product.name}</p>
                             <div className="text-secondary-100 font-text text-sm mt-2" dangerouslySetInnerHTML={{__html: product.description}}></div>

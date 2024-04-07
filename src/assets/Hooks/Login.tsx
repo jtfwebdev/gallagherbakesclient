@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const Login = (email, password, setSessionDetails, setLoginModalOpen) => {
+const Login = (email, password, setSessionDetails, setLoginModalOpen, setButtonText) => {
 
     const payload = JSON.stringify({
         "username": email,
@@ -19,7 +19,10 @@ const Login = (email, password, setSessionDetails, setLoginModalOpen) => {
         setLoginModalOpen(false);
     })
     .catch((err) => {
-        console.log(err)
+        setButtonText("Credentials not recognised")
+        setTimeout(() => {
+            setButtonText("Sign in")
+        }, 3000)
     })
 }
 
