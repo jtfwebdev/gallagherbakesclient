@@ -36,14 +36,12 @@ const Product = ({products, setBasket}) => {
 
             const index = basket.indexOf(existingProduct);
 
-            let updatedBasket = basket;
+            let updatedBasket = structuredClone(basket);
 
-            basket[index] = {
+            updatedBasket[index] = {
                 id: product[0].id,
                 quantity: existingProduct.quantity + quantity
             }
-
-            console.log(updatedBasket)
 
             setBasket(() => updatedBasket);
 

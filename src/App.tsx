@@ -89,7 +89,7 @@ function App() {
           {loginModalOpen && <LoginRegisterModal setLoginModalOpen={setLoginModalOpen} setSessionDetails={setSessionDetails} />}
         </AnimatePresence>
         <AnimatePresence>
-          {cartModalOpen && <Cart setCartModalOpen={setCartModalOpen} />}
+          {cartModalOpen && <Cart setCartModalOpen={setCartModalOpen} products={products} setBasket={setBasket} />}
         </AnimatePresence>
         <ScrollToTop />
         <Routes>
