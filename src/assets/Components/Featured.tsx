@@ -24,15 +24,10 @@ const Featured = ({products}: {products: any[] | null}) => {
 
     const textVars = {
         initial: {
-            transition: {
-                duration: .5
-            }
+            fontWeight: "normal"
         },
         hover: {
-            fontWeight: "bold",
-            transition: {
-                duration: .5
-            }
+            fontWeight: "bold"
         }
     }
 

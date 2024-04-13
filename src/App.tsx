@@ -12,6 +12,7 @@ import Cart from "./assets/Components/Cart";
 import AccountPage from "./assets/Components/AccountPage";
 import axios from "axios";
 import Product from "./assets/Components/Product";
+import Popular from "./assets/Components/Popular";
 
 export const ScreenWidthContext = createContext(window.innerWidth);
 export const SessionContext = createContext(null);
@@ -95,7 +96,12 @@ function App() {
         <Routes>
           <Route index element={<Home products={products} />}></Route>
           <Route path="/shop" element={<Shop products={products} />} ></Route>
-          <Route path="/shop/:id" element={<Product products={products} setBasket={setBasket} />}></Route>
+          <Route path="/shop/:id" element={
+            <>
+              <Product products={products} setBasket={setBasket} />
+              <Popular products={products} />
+            </>
+            }></Route>
           <Route path="/myaccount" element={<AccountPage setSessionDetails={setSessionDetails} />}></Route>
           <Route path="*" element={<RoutingError />}></Route>
         </Routes>

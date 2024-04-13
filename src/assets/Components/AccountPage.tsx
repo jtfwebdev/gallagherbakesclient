@@ -37,7 +37,7 @@ const AccountPage = ({setSessionDetails}) => {
                 </div>
             </div>
             <div className="flex mt-4">
-                <div className="w-[50%] pr-8 flex flex-col">
+                <div className="w-[50%] pr-8 flex flex-col h-fit">
                     <div className="flex-1">
                         <h4 className="text-xl">Recent orders</h4>
                         <div>You haven't placed any orders yet.</div>

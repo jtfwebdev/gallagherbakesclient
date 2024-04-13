@@ -33,14 +33,12 @@ const Cart = ({setCartModalOpen, products, setBasket}: {setCartModalOpen: React.
         animate={{opacity: 1}}
         exit={{opacity: 0}}
         >
-            <div ref={cartPanelRef} className="w-[80%] h-[70%] px-8 py-4 bg-white rounded-lg shadow dark:border dark:bg-gray-800 dark:border-gray-700">
+            <div ref={cartPanelRef} className="w-[80%] h-[80%] max-h-[80%] overflow-y-scroll px-8 py-4 bg-white rounded-lg shadow dark:border dark:bg-gray-800 dark:border-gray-700">
                 <h2 className="font-text text-secondary-100 text-2xl mb-4 border-b-2 border-secondary-100 w-fit">Your Shopping Cart</h2>
                 <div>
-                    {basket && <div className="flex flex-col">
+                    {basket && <div className="flex flex-col gap-4">
                         {basket.map((product, idx) => {
-                            return <AnimatePresence>   
-                                <CartProduct key={idx} products={products} product={product} basket={basket} setBasket={setBasket} />
-                                </AnimatePresence>
+                            return <CartProduct key={idx} products={products} product={product} basket={basket} setBasket={setBasket} />
                         })}
                     </div>}
                     {basket && !basket[0] && 
@@ -95,21 +93,23 @@ const CartProduct = ({products, product, basket, setBasket}) => {
     }, [quantity])
     
     return (
-        <motion.div initial={{opacity: 0, y: -200}} animate={{opacity: 1, y: 0}} exit={{opacity: 0, y: -200}} className="flex">
-            <img className="w-52" src={productDetails[0].images[0].src} alt="" />
-            <div className="pl-4 flex flex-1 items-center justify-between">
-                <div>
-                    {productDetails[0].name}
+        <AnimatePresence>
+            <motion.div initial={{opacity: 0, y: -200}} animate={{opacity: 1, y: 0}} exit={{opacity: 0, y: -200}} className="individual_cart_product flex border-b-2 border-secondary-100 border-opacity-10 pb-4">
+                <img className="w-52" src={productDetails[0].images[0].src} alt="" />
+                <div className="pl-4 flex flex-1 items-center justify-between">
+                    <div className="w-[50%] text-wrap">
+                        {productDetails[0].name}
+                    </div>
+                    <div className="flex items-center mr-4 gap-4">
+                        <FontAwesomeIcon icon={faMinus} className="text-secondary-100 text-4xl hover:opacity-60 hover:cursor-pointer duration-100" onClick={handleDecrement} />
+                        <input type="number" value={quantity} className="bg-gray-50 border border-gray-300 w-12 text-center text-gray-900 sm:text-sm rounded-lg focus:ring-secondary-100 focus:border-secondary-100 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" onChange={(e) => setQuantity(Number(e.target.value))}/>
+                        <FontAwesomeIcon icon={faPlus} className="text-secondary-100 text-4xl hover:opacity-60 hover:cursor-pointer duration-100" onClick={() => setQuantity((prev) => prev + 1)} />
+                    </div>
+                    <div className="text-red-400 hover:text-red-200 hover:cursor-pointer duration-100"  onClick={handleDeleteFromCart}>
+                        Remove <FontAwesomeIcon icon={faTrashCan} className="text-inherit" />
+                    </div>
                 </div>
-                <div className="flex items-center mr-4 gap-4">
-                    <FontAwesomeIcon icon={faMinus} className="text-secondary-100 text-4xl hover:opacity-60 hover:cursor-pointer duration-100" onClick={handleDecrement} />
-                    <input type="number" value={quantity} className="bg-gray-50 border border-gray-300 w-12 text-center text-gray-900 sm:text-sm rounded-lg focus:ring-secondary-100 focus:border-secondary-100 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" onChange={(e) => setQuantity(Number(e.target.value))}/>
-                    <FontAwesomeIcon icon={faPlus} className="text-secondary-100 text-4xl hover:opacity-60 hover:cursor-pointer duration-100" onClick={() => setQuantity((prev) => prev + 1)} />
-                </div>
-                <div className="text-red-400 hover:text-red-200 hover:cursor-pointer duration-100"  onClick={handleDeleteFromCart}>
-                    Remove <FontAwesomeIcon icon={faTrashCan} className="text-inherit" />
-                </div>
-            </div>
-        </motion.div>
+            </motion.div>
+        </AnimatePresence>
     )
 }
