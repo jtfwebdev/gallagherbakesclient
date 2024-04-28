@@ -258,7 +258,7 @@ const ChangePassword = ({userDetails, setActivePanel}) => {
                     required={true}
                     value={updateDetails.password}
                     onChange={(e) => setUpdateDetails((prev) => ({password: e.target.value, newPassword: prev.newPassword, verifyNewPassword: prev.verifyNewPassword}))}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-lg text-end rounded-lg focus:ring-secondary-100 focus:border-secondary-100 block w-[70%] p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-base text-end rounded-lg focus:ring-secondary-100 focus:border-secondary-100 block w-[70%] p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     />
                 </div>
                 <div className="w-[100%] flex flex-col items-end mt-16">
@@ -270,7 +270,7 @@ const ChangePassword = ({userDetails, setActivePanel}) => {
                     required={true}
                     value={updateDetails.newPassword}
                     onChange={(e) => setUpdateDetails((prev) => ({password: prev.password, newPassword: e.target.value, verifyNewPassword: prev.verifyNewPassword}))}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-lg text-end rounded-lg focus:ring-secondary-100 focus:border-secondary-100 block w-[70%] p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-lg text-end rounded-lg focus:ring-secondary-100 focus:border-secondary-100 block w-[70%] p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     />
                 </div>
                 <div className="w-[100%] flex flex-col items-end mt-2">
@@ -282,7 +282,7 @@ const ChangePassword = ({userDetails, setActivePanel}) => {
                     required={true}
                     value={updateDetails.verifyNewPassword}
                     onChange={(e) => setUpdateDetails((prev) => ({password: prev.password, newPassword: prev.newPassword, verifyNewPassword: e.target.value}))}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-lg text-end rounded-lg focus:ring-secondary-100 focus:border-secondary-100 block w-[70%] p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-lg text-end rounded-lg focus:ring-secondary-100 focus:border-secondary-100 block w-[70%] p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     />
                 </div>
                 <motion.button layout transition={{duration: .2}} type="submit" className="w-fit mt-4 text-white bg-secondary-100 hover:opacity-80 focus:ring-4 focus:outline-none focus:ring-secondary-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-secondary-100 dark:hover:bg-secondary-100 dark:focus:ring-primary-800">{buttonText}</motion.button>

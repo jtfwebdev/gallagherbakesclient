@@ -50,7 +50,7 @@ const Featured = ({products}: {products: any[] | null}) => {
 
                     if (idx < 4) {
                         return (
-                            <motion.div key={idx} className="p-4 rounded flex flex-col" initial="initial" whileHover="hover" onClick={() => handleClick(product.slug)}>
+                            <motion.div key={idx} className="p-4 rounded flex flex-col hover:cursor-pointer" initial="initial" whileHover="hover" onClick={() => handleClick(product.slug)}>
                                 <div className="overflow-hidden">
                                     <motion.img className="rounded" src={product.images[0].src} alt="" variants={imgVars}  />
                                 </div>
