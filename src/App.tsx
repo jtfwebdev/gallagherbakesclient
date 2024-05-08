@@ -85,7 +85,7 @@ function App() {
       <SessionContext.Provider value={sessionDetails}>
       <ScreenWidthContext.Provider value={screenWidth}>
       <BasketContext.Provider value={basket}>
-        <Header menuOpen={menuOpen} setMenuOpen={setMenuOpen} setLoginModalOpen={setLoginModalOpen} setCartModalOpen={setCartModalOpen} />
+        <Header menuOpen={menuOpen} setMenuOpen={setMenuOpen} setLoginModalOpen={setLoginModalOpen} setCartModalOpen={setCartModalOpen} products={products} />
         <AnimatePresence>
           {loginModalOpen && <LoginRegisterModal setLoginModalOpen={setLoginModalOpen} setSessionDetails={setSessionDetails} />}
         </AnimatePresence>

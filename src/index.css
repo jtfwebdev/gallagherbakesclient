@@ -29,3 +29,7 @@ h1, h2, h3, h4, h5, h6, p, span {
 .individual_cart_product:last-of-type {
   border: none;
 }
+
+::-webkit-scrollbar { /* To do: custom scrollbar scrolling, present on every page to avoid content jumping */
+  display: none;
+}
