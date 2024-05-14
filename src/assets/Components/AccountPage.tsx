@@ -1,4 +1,5 @@
 import { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { SessionContext } from '../../App';
 import { AnimatePresence, motion } from 'framer-motion';
 import PostUpdateShipping from '../Hooks/PostUpdateShipping'
@@ -13,6 +14,8 @@ const AccountPage = ({setSessionDetails}) => {
 
     const [activePanel, setActivePanel] = useState('');
 
+    const navigate = useNavigate();
+
     const getPanel = () => {
         switch (activePanel) {
             case '':
@@ -24,6 +27,12 @@ const AccountPage = ({setSessionDetails}) => {
             case 'change password':
                 return <AnimatePresence><ChangePassword userDetails={userDetails} setActivePanel={setActivePanel} /></AnimatePresence>
         }
+    }
+
+    const handleSignout = () => {
+        setSessionDetails(null);
+        localStorage.removeItem("token");
+        navigate("/");
     }
 
     return ( 
@@ -47,8 +56,7 @@ const AccountPage = ({setSessionDetails}) => {
                         <button onClick={() => setActivePanel('update shipping')} className={buttonStyle}>Update shipping information</button>
                         <button onClick={() => setActivePanel('update billing')} className={buttonStyle}>Update billing information</button>
                         <button onClick={() => setActivePanel('change password')} className={buttonStyle}>Change password</button>
-                        <button className={buttonStyle}>Sign out</button>
-                        <button className={buttonStyle}>Delete account</button>
+                        <button className={buttonStyle} onClick={handleSignout}>Sign out</button>
                     </div>
                 </div>
                 <div className="w-[50%] pl-8">

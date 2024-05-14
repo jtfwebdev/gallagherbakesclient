@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useContext, useEffect, useRef, useState } from 'react';
 import '../Styles/Header.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHouse, faCircleUser, faCartShopping } from '@fortawesome/free-solid-svg-icons';
+import { faShop, faCircleUser, faCartShopping, faHome } from '@fortawesome/free-solid-svg-icons';
 import { ScreenWidthContext } from '../../App';
 import { SessionContext } from '../../App';
 
@@ -20,23 +20,88 @@ const Header = ({menuOpen, setMenuOpen, setLoginModalOpen, setCartModalOpen, pro
     }
 
     return ( 
-        <div className="w-full flex justify-between h-16 bg-secondary-100">
-            <Link to="/" className="flex items-center w-1/3 justify-start ml-4" ><div className="flex items-center justify-center text-primary-100 font-header text-5xl">Gallagher Bakes</div></Link>
-            <div className="w-1/3 my-auto">
+        <div className="w-full relative flex justify-between h-16 bg-secondary-100 pr-4 z-50 max-[425px]:pl-4">
+            {screenWidth > 425 && <Home screenWidth={screenWidth}/>}
+            <div className="w-1/3 my-auto max-[800px]:w-1/2 max-[550px]:w-[60%] max-[425px]:w-[85%]">
                 <SearchBar products={products} />
             </div>
-            {screenWidth < 800 && <MobileHamburger setMenuOpen={setMenuOpen} menuOpen={menuOpen} />}
-            <div className="my-auto mr-4 w-1/3 flex justify-end gap-8">
-                <FontAwesomeIcon onClick={() => setCartModalOpen((prev) => !prev)} className="h-[35px] text-primary-100 hover:opacity-80 hover:cursor-pointer duration-150" icon={faCartShopping} />
-                <FontAwesomeIcon onClick={() => handleAccountClick()} className={`h-[35px] ${(!session) ? "opacity-50" : "opacity-100" } text-primary-100 hover:opacity-80 hover:cursor-pointer duration-150`} icon={faCircleUser} />
-            </div>
+            {screenWidth <= 800 && <MobileHamburger setMenuOpen={setMenuOpen} menuOpen={menuOpen} navigate={navigate} setCartModalOpen={setCartModalOpen} session={session} handleAccountClick={handleAccountClick} screenWidth={screenWidth} />}
+            {screenWidth > 800 && <div className="my-auto mr-4 w-1/3 flex justify-end gap-8">
+                <ShopIcon navigate={navigate} />
+                <CartIcon setCartModalOpen={setCartModalOpen} />
+                <AccountIcon handleAccountClick={handleAccountClick} session={session} />
+            </div>}
         </div>
      );
 }
 
 export default Header;
 
-const MobileHamburger = ({setMenuOpen, menuOpen} : {menuOpen: boolean, setMenuOpen: React.Dispatch<React.SetStateAction<boolean>>}) => {
+const Home = ({screenWidth}) => {
+    return (
+        <Link to="/" className="
+            flex items-center w-1/3 justify-start ml-4
+            max-[800px]:w-[47px]
+            max-[425px]:w-fit max-[425px]:items-start max-[425px]:ml-0">
+                {screenWidth <= 800 ? 
+                    <div className="">
+                        <FontAwesomeIcon className="h-[25px] text-primary-100" icon={faHome} />
+                        {screenWidth <= 425 && 
+                        <span className="
+                        font-text text-xs text-primary-100
+                        max-[800px]:text-lg max-[800px]:ml-2">HOME
+                        </span>}
+                    </div> 
+                    : 
+                    <div className="
+                    flex items-center justify-center text-primary-100 font-header text-5xl
+                    max-[1100px]:text-4xl
+                    max-[800px]:text-3xl">Gallagher Bakes</div>
+                }
+        </Link>
+    )
+}
+
+const AccountIcon = ({handleAccountClick, session}) => {
+    return (
+        <div className="
+        flex flex-col items-center justify-center hover:opacity-80 hover:cursor-pointer duration-150
+        max-[800px]:flex-row" onClick={() => handleAccountClick()}>
+            <FontAwesomeIcon className={`h-[25px] ${(!session) ? "opacity-50" : "opacity-100" } text-primary-100`} icon={faCircleUser} />
+            <span className="
+            font-text text-xs text-primary-100
+            max-[800px]:text-lg max-[800px]:ml-2">{session ? "ACCOUNT" : "LOG IN"}</span>
+        </div>
+    )
+}
+
+const CartIcon = ({setCartModalOpen}) => {
+    return (
+         <div className="
+         flex flex-col items-center justify-center hover:opacity-80 hover:cursor-pointer duration-150
+         max-[800px]:flex-row" onClick={() => setCartModalOpen((prev) => !prev)}>
+            <FontAwesomeIcon className="h-[25px] text-primary-100" icon={faCartShopping} />
+            <span className="
+            font-text text-xs text-primary-100
+            max-[800px]:text-lg max-[800px]:ml-2">CART</span>
+        </div>
+    )
+}
+
+const ShopIcon = ({navigate}) => {
+    return (
+        <div className="
+        flex flex-col items-center justify-center hover:opacity-80 hover:cursor-pointer duration-150
+        max-[800px]:flex-row" onClick={() => navigate("/shop")}>
+            <FontAwesomeIcon icon={faShop} className="h-[25px] text-primary-100" />
+            <span className="
+            font-text text-xs text-primary-100
+            max-[800px]:text-lg max-[800px]:ml-2">SHOP</span>
+        </div>
+    )
+}
+
+const MobileHamburger = ({setMenuOpen, menuOpen, navigate, setCartModalOpen, handleAccountClick, session, screenWidth} : {menuOpen: boolean, setMenuOpen: React.Dispatch<React.SetStateAction<boolean>>}) => {
 
     const burgerMenuVariants = {
         initial1: {
@@ -68,10 +133,22 @@ const MobileHamburger = ({setMenuOpen, menuOpen} : {menuOpen: boolean, setMenuOp
     }
 
     return(
-        <div className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
+        <div className="hamburger relative" onClick={() => setMenuOpen(!menuOpen)}>
             <motion.div className="bar bg-primary-100" variants={burgerMenuVariants} initial="initial1" animate={menuOpen ? "open1" : "initial1"}></motion.div>
             <motion.div className="bar bg-primary-100" variants={burgerMenuVariants} initial="initial2" animate={menuOpen ? "open2" : "initial2"}></motion.div>
             <motion.div className="bar bg-primary-100" variants={burgerMenuVariants} initial="initial3" animate={menuOpen ? "open3" : "initial3"}></motion.div>
+            <AnimatePresence>{menuOpen && 
+                <motion.div className="
+                modal absolute bg-secondary-100 top-[60px] -right-8 w-[30vw] h-fit overflow-y-scroll max-h-[50vh] flex flex-col gap-4 p-4 z-30 rounded-2xl
+                max-[440px]:w-[45vw]" initial={{x: 100, opacity: 0}} animate={{x: 0, opacity: 1}} exit={{x: 100, opacity: 0}}>
+                    <div className="flex flex-col items-start mt-4 gap-8">
+                        {screenWidth <= 425 && <Home screenWidth={screenWidth}/>}
+                        <ShopIcon navigate={navigate} />
+                        <CartIcon setCartModalOpen={setCartModalOpen} />
+                        <AccountIcon handleAccountClick={handleAccountClick} session={session} />
+                    </div>
+                </motion.div>
+            }</AnimatePresence>
         </div>
     )
 }
@@ -112,7 +189,7 @@ const SearchBar = ({products} : {products: any[] | null}) => {
     }, [searchText]);
 
     return (
-        <form ref={searchFormRef} className="max-w-md mx-auto">   
+        <form ref={searchFormRef} className="mx-auto">   
             <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
             <div className="relative">
                 <div className="relative">
@@ -121,8 +198,8 @@ const SearchBar = ({products} : {products: any[] | null}) => {
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                         </svg>
                     </div>
-                    <input type="search" id="default-search" className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-2xl bg-gray-50 focus:ring-secondary-100 focus:border-secondary-100 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-secondary-100 dark:focus:border-secondary-100" placeholder="Search products..." required value={searchText} onChange={(e) => setSearchText(e.target.value)} />
-                    <button type="submit" className="text-white absolute end-2.5 bottom-2.5 bg-secondary-100 hover:opacity-80 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+                    <input type="text" id="default-search" className="block w-full p-[.8rem] ps-10 text-sm text-gray-900 border border-gray-300 rounded-2xl bg-gray-50 focus:ring-secondary-100 focus:border-secondary-100 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-secondary-100 dark:focus:border-secondary-100" placeholder="Search products..." required value={searchText} onChange={(e) => setSearchText(e.target.value)} />
+                    <button type="submit" className="text-white absolute end-2.5 bottom-[.4rem] bg-secondary-100 hover:opacity-80 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">Search</button>
                 </div>
                 <AnimatePresence>
                     {searchModalOpen && 
@@ -130,8 +207,8 @@ const SearchBar = ({products} : {products: any[] | null}) => {
                             {searchResults[0] ? searchResults.map((product) => {
                                 return (
                                     <Link to={`/shop/${product.slug}`} onClick={() => setSearchModalOpen(false)}>
-                                        <div className="flex w-inherit items-center">
-                                            <img className="object-contain rounded h-32 w-32" src={product.images[0].src} alt="" />
+                                        <div className="flex w-inherit rounded items-center duration-200 hover:bg-primary-100 hover:bg-opacity-80">
+                                            <img className="object-contain rounded h-24 w-24" src={product.images[0].src} alt="" />
                                             <p className="ml-4">{product.name}</p>
                                         </div>
                                     </Link>

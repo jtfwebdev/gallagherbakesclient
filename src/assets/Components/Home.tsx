@@ -18,7 +18,7 @@ export default Home;
 
 const Divider = () => {
   return (
-    <div className="mt-8">
+    <div className="pt-8">
       <div className="h-[6px] mb-[4px] w-[70%] opacity-70 mx-auto bg-secondary-100 rounded-full" />
       <div className="h-[6px] mb-[5px] w-[70%] opacity-60 mx-auto bg-secondary-100 rounded-full" />
       <div className="h-[5px] mb-[5px] w-[70%] opacity-50 mx-auto bg-secondary-100 rounded-full" />

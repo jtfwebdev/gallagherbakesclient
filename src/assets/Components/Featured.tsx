@@ -37,9 +37,10 @@ const Featured = ({products}: {products: any[] | null}) => {
 
     return ( 
         <div className="
-        w-[70%] mx-auto h-fit mt-16
+        w-[70%] mx-auto h-fit mt-12
         max-[900px]:w-[80%]
         max-[750px]:w-[90%]
+        max-[700px]:mt-8
         ">
             <h2 className="font-text text-secondary-100 text-2xl mb-4 border-b-2 border-secondary-100 w-fit">Featured Products</h2>
             

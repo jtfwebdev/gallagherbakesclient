@@ -10,7 +10,13 @@
     margin-right: 10px
 }
 
-.hamburger div {
+@media(max-width: 425px) {
+    .hamburger {
+        margin-right: 0;
+    }
+}
+
+.hamburger .bar {
     margin: 0 auto;
     width: 70%;
     height: 10%;

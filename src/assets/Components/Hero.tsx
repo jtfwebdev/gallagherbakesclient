@@ -4,7 +4,7 @@ const Hero = () => {
 
     return ( 
         <div className="
-            w-full relative h-[60vh]
+            w-full relative h-[60vh] bg-primary-100
             max-[1200px]:h-[50vh]
             max-[900px]:h-[45vh]
             max-[650px]:h-[40vh]
@@ -21,11 +21,14 @@ const Hero = () => {
                 max-[900px]:text-8xl
                 max-[700px]:text-7xl   
                 max-[500px]:text-6xl
+                max-[425px]:text-5xl
                 ">Gallagher Bakes</h1>
                 <h2 className="
                 font-header text-2xl text-secondary-100 font-bold
                 max-[900px]:text-xl
                 max-[500px]:text-base
+                max-[425px]:-mt-4 
+                max-[380px]:px-8 max-[380px]:text-center
                 ">Family-run bakery established in the Midlands since 1977.</h2>
             </div>
         </div>

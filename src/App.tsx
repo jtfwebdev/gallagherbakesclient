@@ -13,6 +13,7 @@ import AccountPage from "./assets/Components/AccountPage";
 import axios from "axios";
 import Product from "./assets/Components/Product";
 import Popular from "./assets/Components/Popular";
+import Checkout from "./assets/Components/Checkout";
 
 export const ScreenWidthContext = createContext(window.innerWidth);
 export const SessionContext = createContext(null);
@@ -25,6 +26,7 @@ function App() {
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [cartModalOpen, setCartModalOpen] = useState(false);
   const [basket, setBasket] = useState([]);
+  const [basketTotal, setBasketTotal] = useState<string>("0");
 
   useEffect(() => {
     const watchWidth = () => {
@@ -90,7 +92,7 @@ function App() {
           {loginModalOpen && <LoginRegisterModal setLoginModalOpen={setLoginModalOpen} setSessionDetails={setSessionDetails} />}
         </AnimatePresence>
         <AnimatePresence>
-          {cartModalOpen && <Cart setCartModalOpen={setCartModalOpen} products={products} setBasket={setBasket} />}
+          {cartModalOpen && <Cart setCartModalOpen={setCartModalOpen} products={products} setBasket={setBasket} setBasketTotal={setBasketTotal} basketTotal={basketTotal} />}
         </AnimatePresence>
         <ScrollToTop />
         <Routes>
@@ -101,7 +103,8 @@ function App() {
               <Product products={products} setBasket={setBasket} />
               <Popular products={products} />
             </>
-            }></Route>
+          }></Route>
+          <Route path="/checkout" element={<Checkout basketTotal={basketTotal} />}></Route>
           <Route path="/myaccount" element={<AccountPage setSessionDetails={setSessionDetails} />}></Route>
           <Route path="*" element={<RoutingError />}></Route>
         </Routes>
