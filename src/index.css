@@ -11,12 +11,18 @@
 
 html { /* To prevent scrollbar from pushing content inwards, particularly the header */
   overflow-x: hidden;
-  margin-right: calc(-1 * (100vw - 100%));
+}
+
+@media(max-width: 768px) {
+  html {
+    margin-right: calc(-1 * (100vw - 100%));
+  }
 }
 
 body {
   background-color: #F9EBE0;
   overflow-x: hidden;
+  width: 100%;
 }
 
 * {

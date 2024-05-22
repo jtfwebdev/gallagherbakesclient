@@ -45,12 +45,16 @@ const Cart = ({setCartModalOpen, products, setBasket, basketTotal, setBasketTota
 
     return ( 
         <motion.div 
-        className="fixed z-50 h-full w-full py-2 flex items-center justify-center inset-x-0 inset-y-0 bg-transparent backdrop-blur"
+        className="
+        fixed z-50 h-full w-full py-2 flex items-center justify-center inset-x-0 inset-y-0 bg-transparent backdrop-blur
+        max-[900px]:inset-y-16 max-[900px]:items-start max-[900px]:py-0"
         initial={{opacity: 0}}
         animate={{opacity: 1}}
         exit={{opacity: 0}}
         >
-            <div ref={cartPanelRef} className="w-[80%] h-[80%] max-h-[80%] flex flex-col overflow-y-scroll px-8 py-4 bg-white rounded-lg shadow dark:border dark:bg-gray-800 dark:border-gray-700">
+            <div ref={cartPanelRef} className="
+            w-[80%] h-[80%] flex flex-col overflow-y-scroll px-8 py-4 bg-white rounded-lg shadow dark:border dark:bg-gray-800 dark:border-gray-700
+            max-[900px]:w-[100%] max-[900px]:min-h-[95%]">
                 <h2 className="font-text text-secondary-100 text-2xl mb-4 border-b-2 border-secondary-100 w-fit">Your Shopping Cart</h2>
                 <div className="h-full">
                     {basket && basket[0] && <div className="flex flex-col h-full gap-4">

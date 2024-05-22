@@ -5,7 +5,7 @@ import Hero from "./Hero";
 
 const Home = ({products}) => {
     return ( 
-        <div className="h-[100vh] w-full bg-primary-100">
+        <div className="w-full bg-primary-100">
             <Hero />
             <Divider />
             <Featured products={products} />
