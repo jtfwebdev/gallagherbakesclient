@@ -2,7 +2,6 @@ import Featured from "./Featured";
 import FindUs from "./FindUs";
 import Hero from "./Hero";
 
-
 const Home = ({products}) => {
     return ( 
         <div className="w-full bg-primary-100">

@@ -20,14 +20,14 @@ const Header = ({menuOpen, setMenuOpen, setLoginModalOpen, setCartModalOpen, pro
     }
 
     return ( 
-        <div className="w-full relative flex justify-between h-16 bg-secondary-100 pr-4 z-50 max-[425px]:pl-4">
+        <div className="w-full relative flex justify-between h-16 bg-secondary-100 z-50 max-[425px]:pl-4">
             {screenWidth > 425 && <Home screenWidth={screenWidth}/>}
             <div className="w-1/3 my-auto max-[800px]:w-1/2 max-[550px]:w-[60%] max-[425px]:w-[85%]">
                 <SearchBar products={products} />
             </div>
             {screenWidth <= 800 && <MobileHamburger setMenuOpen={setMenuOpen} menuOpen={menuOpen} navigate={navigate} setCartModalOpen={setCartModalOpen} session={session} handleAccountClick={handleAccountClick} screenWidth={screenWidth} />}
             {screenWidth > 800 && <div className="my-auto mr-4 w-1/3 flex justify-end gap-8">
-                <ShopIcon navigate={navigate} />
+                <ShopIcon navigate={navigate} setCartModalOpen={setCartModalOpen} />
                 <CartIcon setCartModalOpen={setCartModalOpen} />
                 <AccountIcon handleAccountClick={handleAccountClick} session={session} />
             </div>}
@@ -79,7 +79,7 @@ const CartIcon = ({setCartModalOpen}) => {
     return (
          <div className="
          flex flex-col items-center justify-center hover:opacity-80 hover:cursor-pointer duration-150
-         max-[800px]:flex-row" onClick={() => setCartModalOpen((prev) => !prev)}>
+         max-[800px]:flex-row" onClick={() => setCartModalOpen(true)}>
             <FontAwesomeIcon className="h-[25px] text-primary-100" icon={faCartShopping} />
             <span className="
             font-text text-xs text-primary-100
@@ -88,11 +88,17 @@ const CartIcon = ({setCartModalOpen}) => {
     )
 }
 
-const ShopIcon = ({navigate}) => {
+const ShopIcon = ({navigate, setCartModalOpen}) => {
+
+    const handleShopClick = () => {
+        setCartModalOpen(false);
+        navigate("/shop");
+    }
+
     return (
         <div className="
         flex flex-col items-center justify-center hover:opacity-80 hover:cursor-pointer duration-150
-        max-[800px]:flex-row" onClick={() => navigate("/shop")}>
+        max-[800px]:flex-row" onClick={handleShopClick}>
             <FontAwesomeIcon icon={faShop} className="h-[25px] text-primary-100" />
             <span className="
             font-text text-xs text-primary-100
@@ -139,11 +145,11 @@ const MobileHamburger = ({setMenuOpen, menuOpen, navigate, setCartModalOpen, han
             <motion.div className="bar bg-primary-100" variants={burgerMenuVariants} initial="initial3" animate={menuOpen ? "open3" : "initial3"}></motion.div>
             <AnimatePresence>{menuOpen && 
                 <motion.div className="
-                modal absolute bg-secondary-100 top-[60px] -right-8 w-[30vw] h-fit overflow-y-scroll max-h-[50vh] flex flex-col gap-4 p-4 z-30 rounded-2xl
+                modal absolute bg-secondary-100 top-[60px] -right-8 w-[30vw] h-fit overflow-y-scroll max-h-[50vh] flex flex-col gap-4 p-4 z-50 rounded-2xl
                 max-[440px]:w-[45vw]" initial={{x: 100, opacity: 0}} animate={{x: 0, opacity: 1}} exit={{x: 100, opacity: 0}}>
                     <div className="flex flex-col items-start mt-4 gap-8">
                         {screenWidth <= 425 && <Home screenWidth={screenWidth}/>}
-                        <ShopIcon navigate={navigate} />
+                        <ShopIcon navigate={navigate} setCartModalOpen={setCartModalOpen} />
                         <CartIcon setCartModalOpen={setCartModalOpen} />
                         <AccountIcon handleAccountClick={handleAccountClick} session={session} />
                     </div>

@@ -36,7 +36,9 @@ const AccountPage = ({setSessionDetails}) => {
     }
 
     return ( 
-        <motion.div className="w-[70%] flex flex-col px-[2%] min-h-[70vh] py-4 my-8 m-auto bg-white rounded font-text">
+        <motion.div className="
+        w-[70%] flex flex-col px-[2%] min-h-[70vh] py-4 my-8 m-auto bg-white rounded font-text
+        max-[800px]:w-[95%]">
             <div className="flex flex-col text-4xl font-text">
                 <div className="flex align-center justify-between gap-32 pb-4 border-b-2 border-secondary-100">
                     <h2 className="inline">My Account</h2>

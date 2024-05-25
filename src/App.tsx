@@ -75,6 +75,14 @@ function App() {
     return () => window.removeEventListener("storage", watchStorage)
   }, [])
 
+  useEffect(() => {
+    if (cartModalOpen || loginModalOpen) {
+      document.body.style.overflowY = "hidden";
+    } else {
+      document.body.style.overflowY = "scroll";
+    }
+  }, [cartModalOpen, loginModalOpen]);
+
   const [menuOpen, setMenuOpen] = useState<Boolean>(false);
   const [products, setProducts] = useState<any[] | null>(null);
 
@@ -104,7 +112,7 @@ function App() {
               <Popular products={products} />
             </>
           }></Route>
-          <Route path="/checkout" element={<Checkout basketTotal={basketTotal} />}></Route>
+          <Route path="/checkout" element={<Checkout basketTotal={basketTotal} sessionDetails={sessionDetails} />}></Route>
           <Route path="/myaccount" element={<AccountPage setSessionDetails={setSessionDetails} />}></Route>
           <Route path="*" element={<RoutingError />}></Route>
         </Routes>
