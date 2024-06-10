@@ -88,7 +88,14 @@ function App() {
 
   useEffect(() => {
     FetchProducts(setProducts);
+    
+    let localBasket = localStorage.getItem('basket');
+    setBasket(JSON.parse(localBasket));
   }, [])
+
+  useEffect(() => { //basket-tracking functionality to be abstracted out to a cookie, as it's simpler to incorporate an expiration time
+    localStorage.setItem('basket', JSON.stringify(basket));
+  }, [basket])
 
   return(
     <>
@@ -112,7 +119,7 @@ function App() {
               <Popular products={products} />
             </>
           }></Route>
-          <Route path="/checkout" element={<Checkout basketTotal={basketTotal} sessionDetails={sessionDetails} />}></Route>
+          <Route path="/checkout" element={<Checkout basketTotal={basketTotal} sessionDetails={sessionDetails} setLoginModalOpen={setLoginModalOpen} />}></Route>
           <Route path="/myaccount" element={<AccountPage setSessionDetails={setSessionDetails} />}></Route>
           <Route path="*" element={<RoutingError />}></Route>
         </Routes>
