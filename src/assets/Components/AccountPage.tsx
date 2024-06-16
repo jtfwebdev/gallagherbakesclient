@@ -449,13 +449,13 @@ const ChangePassword = ({
 
       const token = localStorage.getItem("token");
 
-      const data = JSON.stringify({
+      const data = {
         token: token,
         id: userDetails.id,
         username: userDetails.email,
         password: updateDetails.password,
         newPassword: updateDetails.newPassword,
-      });
+      };
       UpdatePassword(data, setButtonText, setActivePanel);
     } else setButtonText("Must be logged in.");
   };

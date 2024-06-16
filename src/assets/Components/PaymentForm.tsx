@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const PaymentForm = ({ basketTotal }: { basketTotal: string }) => {
   const [paymentDetails, setPaymentDetails] = useState<any>({
@@ -33,6 +34,15 @@ const PaymentForm = ({ basketTotal }: { basketTotal: string }) => {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
+    setDemoModalOpen(true);
+  };
+
+  //Demo modal
+
+  const [demoModalOpen, setDemoModalOpen] = useState(false);
+
+  const handleCloseDemoWarning = () => {
+    setDemoModalOpen(false);
   };
 
   return (
@@ -44,7 +54,28 @@ const PaymentForm = ({ basketTotal }: { basketTotal: string }) => {
               Payment
             </h2>
 
-            <div className="mt-6 sm:mt-8 lg:flex lg:items-start lg:gap-12">
+            <div className="relative mt-6 sm:mt-8 lg:flex lg:items-start lg:gap-12">
+              {demoModalOpen && (
+                <AnimatePresence>
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="absolute w-full flex flex-col items-center justify-center gap-8 h-full z-50 rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6 lg:max-w-xl lg:p-8"
+                  >
+                    <p className="text-center font-bold">
+                      This is a demo website. As such, any payment information
+                      entered here has not been saved.
+                    </p>
+                    <button
+                      className="px-8 py-2 rounded-full text-white bg-secondary-100 hover:opacity-80"
+                      onClick={handleCloseDemoWarning}
+                    >
+                      Close this message
+                    </button>
+                  </motion.div>
+                </AnimatePresence>
+              )}
               <form className="w-full rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6 lg:max-w-xl lg:p-8">
                 <div className="mb-6 grid grid-cols-2 gap-4">
                   <div className="col-span-2 sm:col-span-1">
@@ -199,7 +230,7 @@ const PaymentForm = ({ basketTotal }: { basketTotal: string }) => {
                   onClick={handlePaymentClick}
                   className={`flex w-full items-center justify-center rounded-lg ${paymentButton.formComplete ? "bg-secondary-100" : "bg-gray-300"} duration-200 px-5 py-2.5 text-sm font-medium text-white hover:opacity-80`}
                 >
-                  Pay now
+                  {paymentButton.buttonText}
                 </button>
               </form>
 

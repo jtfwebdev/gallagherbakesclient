@@ -9,7 +9,7 @@ const LoginRegisterModal = ({
   setSessionDetails,
 }: {
   setLoginModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setSessionDetails: React.Dispatch<React.SetStateAction<User>>;
+  setSessionDetails: React.Dispatch<React.SetStateAction<User | null>>;
 }) => {
   const loginPanelRef = useRef(null);
   const [registerPanelActive, setRegisterPanelActive] = useState(false);
@@ -71,7 +71,7 @@ const LoginPanel = ({
   setLoginModalOpen,
   setRegisterPanelActive,
 }: {
-  setSessionDetails: React.Dispatch<SetStateAction<User>>;
+  setSessionDetails: React.Dispatch<SetStateAction<User | null>>;
   setLoginModalOpen: React.Dispatch<SetStateAction<boolean>>;
   setRegisterPanelActive: React.Dispatch<SetStateAction<boolean>>;
 }) => {
@@ -196,7 +196,7 @@ const RegisterPanel = ({
 }: {
   setRegisterPanelActive: React.Dispatch<SetStateAction<boolean>>;
   setLoginModalOpen: React.Dispatch<SetStateAction<boolean>>;
-  setSessionDetails: React.Dispatch<SetStateAction<User>>;
+  setSessionDetails: React.Dispatch<SetStateAction<User | null>>;
 }) => {
   const handleLogIn = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.stopPropagation();
