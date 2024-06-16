@@ -1,17 +1,22 @@
-import { useContext, useState } from "react";
+import { SetStateAction, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SessionContext } from "../../App";
 import { AnimatePresence, motion } from "framer-motion";
 import PostUpdateShipping from "../Hooks/PostUpdateShipping";
 import UpdatePassword from "../Hooks/UpdatePassword";
+import { User } from "../Types";
 
-const AccountPage = ({ setSessionDetails }) => {
+const AccountPage = ({
+  setSessionDetails,
+}: {
+  setSessionDetails: React.Dispatch<React.SetStateAction<User | null>>;
+}) => {
   const buttonStyle =
     "w-full mx-auto text-white bg-secondary-100 hover:opacity-80 focus:ring-4 focus:outline-none focus:ring-secondary-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-secondary-100 dark:hover:bg-secondary-100 dark:focus:ring-primary-800";
   const returnButtonStyle =
     "w-full mx-auto text-white bg-secondaryBtn-100 hover:opacity-80 focus:ring-4 focus:outline-none focus:ring-secondary-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-secondary-100 dark:hover:bg-secondary-100 dark:focus:ring-primary-800";
 
-  const userDetails = useContext(SessionContext);
+  const userDetails: User | null = useContext(SessionContext);
 
   const [activePanel, setActivePanel] = useState("");
 
@@ -131,7 +136,7 @@ const AccountPage = ({ setSessionDetails }) => {
 
 export default AccountPage;
 
-const ShippingInfo = ({ userDetails }) => {
+const ShippingInfo = ({ userDetails }: { userDetails: User | null }) => {
   return (
     <motion.div
       className="w-full text-end font-text flex flex-col"
@@ -141,28 +146,38 @@ const ShippingInfo = ({ userDetails }) => {
     >
       <div>
         <p className="text-xs font-bold pt-2">Email address</p>
-        <p className="text-xl">{userDetails.email}</p>
+        <p className="text-xl">{userDetails ? userDetails.email : ""}</p>
       </div>
       <h3 className="font-bold text-2xl mt-4">Shipping information</h3>
       <div>
         <p className="text-xs font-bold pt-2">Address line 1</p>
-        <p className="text-xl">{userDetails.shipping.address_1}</p>
+        <p className="text-xl">
+          {userDetails ? userDetails.shipping.address_1 : ""}
+        </p>
       </div>
       <div>
         <p className="text-xs font-bold pt-2">Address line 2</p>
-        <p className="text-xl">{userDetails.shipping.address_2}</p>
+        <p className="text-xl">
+          {userDetails ? userDetails.shipping.address_2 : ""}
+        </p>
       </div>
       <div>
         <p className="text-xs font-bold pt-2">City</p>
-        <p className="text-xl">{userDetails.shipping.city}</p>
+        <p className="text-xl">
+          {userDetails ? userDetails.shipping.city : ""}
+        </p>
       </div>
       <div>
         <p className="text-xs font-bold pt-2">Postcode</p>
-        <p className="text-xl">{userDetails.shipping.postcode}</p>
+        <p className="text-xl">
+          {userDetails ? userDetails.shipping.postcode : ""}
+        </p>
       </div>
       <div>
         <p className="text-xs font-bold pt-2">Contact number</p>
-        <p className="text-xl">{userDetails.shipping.phone}</p>
+        <p className="text-xl">
+          {userDetails ? userDetails.shipping.phone : ""}
+        </p>
       </div>
     </motion.div>
   );
@@ -173,6 +188,11 @@ const UpdateDetails = ({
   userDetails,
   setSessionDetails,
   setActivePanel,
+}: {
+  children: string;
+  userDetails: User | null;
+  setSessionDetails: React.Dispatch<React.SetStateAction<User | null>>;
+  setActivePanel: React.Dispatch<React.SetStateAction<string>>;
 }) => {
   const [buttonText, setButtonText] = useState("Save");
 
@@ -189,25 +209,32 @@ const UpdateDetails = ({
     contactNumber: "",
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    setButtonText("Saving...");
+    if (userDetails) {
+      setButtonText("Saving...");
 
-    const data = {
-      [fieldCase]: {
-        userId: userDetails.id,
-        first_name: details.firstName,
-        last_name: details.lastName,
-        address_1: details.address1,
-        address_2: details.address2,
-        city: details.city,
-        postcode: details.postcode,
-        phone: details.contactNumber,
-      },
-    };
+      const data = {
+        [fieldCase]: {
+          userId: userDetails.id,
+          first_name: details.firstName,
+          last_name: details.lastName,
+          address_1: details.address1,
+          address_2: details.address2,
+          city: details.city,
+          postcode: details.postcode,
+          phone: details.contactNumber,
+        },
+      };
 
-    PostUpdateShipping(data, setButtonText, setSessionDetails, setActivePanel);
+      PostUpdateShipping(
+        data,
+        setButtonText,
+        setSessionDetails,
+        setActivePanel
+      );
+    } else setButtonText("Must be logged in.");
   };
 
   return (
@@ -391,7 +418,13 @@ const UpdateDetails = ({
   );
 };
 
-const ChangePassword = ({ userDetails, setActivePanel }) => {
+const ChangePassword = ({
+  userDetails,
+  setActivePanel,
+}: {
+  userDetails: User | null;
+  setActivePanel: React.Dispatch<SetStateAction<string>>;
+}) => {
   const [updateDetails, setUpdateDetails] = useState({
     password: "",
     newPassword: "",
@@ -400,7 +433,7 @@ const ChangePassword = ({ userDetails, setActivePanel }) => {
 
   const [buttonText, setButtonText] = useState("Save");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (updateDetails.newPassword !== updateDetails.verifyNewPassword) {
@@ -411,19 +444,20 @@ const ChangePassword = ({ userDetails, setActivePanel }) => {
       return;
     }
 
-    setButtonText("Saving...");
+    if (userDetails) {
+      setButtonText("Saving...");
 
-    const token = localStorage.getItem("token");
+      const token = localStorage.getItem("token");
 
-    const data = JSON.stringify({
-      token: token,
-      id: userDetails.id,
-      username: userDetails.email,
-      password: updateDetails.password,
-      newPassword: updateDetails.newPassword,
-    });
-
-    UpdatePassword(data, setButtonText, setActivePanel);
+      const data = JSON.stringify({
+        token: token,
+        id: userDetails.id,
+        username: userDetails.email,
+        password: updateDetails.password,
+        newPassword: updateDetails.newPassword,
+      });
+      UpdatePassword(data, setButtonText, setActivePanel);
+    } else setButtonText("Must be logged in.");
   };
 
   return (

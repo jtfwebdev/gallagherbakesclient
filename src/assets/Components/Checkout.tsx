@@ -1,10 +1,19 @@
-import { useContext, useEffect, useState } from "react";
+import { SetStateAction, useContext, useEffect, useState } from "react";
 import { BasketContext } from "../../App";
 import { AnimatePresence, motion } from "framer-motion";
 import PaymentForm from "./PaymentForm";
+import { User, BasketItem } from "../Types";
 
-const Checkout = ({ basketTotal, sessionDetails, setLoginModalOpen }) => {
-  const basket = useContext(BasketContext);
+const Checkout = ({
+  basketTotal,
+  sessionDetails,
+  setLoginModalOpen,
+}: {
+  basketTotal: string;
+  sessionDetails: User | null;
+  setLoginModalOpen: React.Dispatch<SetStateAction<boolean>>;
+}) => {
+  const basket: BasketItem[] = useContext(BasketContext);
   const [guestCheckout, setGuestCheckout] = useState(false);
   const [paymentOptionsVisible, setPaymentOptionsVisible] = useState(false);
 
@@ -67,6 +76,10 @@ const ShippingBilling = ({
   sessionDetails,
   paymentOptionsVisible,
   setPaymentOptionsVisible,
+}: {
+  sessionDetails: User | null;
+  paymentOptionsVisible: boolean;
+  setPaymentOptionsVisible: React.Dispatch<SetStateAction<boolean>>;
 }) => {
   const [shippingDetails, setShippingDetails] = useState({
     firstName: "",
@@ -114,16 +127,18 @@ const ShippingBilling = ({
     }
   }, [sessionDetails]);
 
-  const handleCopyShippingDetails = (e) => {
+  const handleCopyShippingDetails = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     e.preventDefault();
     setBillingDetails(shippingDetails);
   };
 
   const handlePaymentOptions = () => {
-    const verifiableShipping = Object.assign({}, shippingDetails);
+    const verifiableShipping: any = Object.assign({}, shippingDetails);
     delete verifiableShipping.address2;
 
-    const verifiableBilling = Object.assign({}, billingDetails);
+    const verifiableBilling: any = Object.assign({}, billingDetails);
     delete verifiableBilling.address2;
 
     for (const key in verifiableShipping) {
