@@ -14,6 +14,7 @@ import axios from "axios";
 import Product from "./assets/Components/Product";
 import Popular from "./assets/Components/Popular";
 import Checkout from "./assets/Components/Checkout";
+import Footer from "./assets/Components/Footer";
 import { SingularProduct, User, BasketItem } from "./assets/Types";
 
 export const ScreenWidthContext = createContext(window.innerWidth);
@@ -80,7 +81,7 @@ function App() {
     if (cartModalOpen || loginModalOpen) {
       document.body.style.overflowY = "hidden";
     } else {
-      document.body.style.overflowY = "scroll";
+      document.body.style.overflowY = "auto";
     }
   }, [cartModalOpen, loginModalOpen]);
 
@@ -159,10 +160,16 @@ function App() {
               ></Route>
               <Route
                 path="/myaccount"
-                element={<AccountPage setSessionDetails={setSessionDetails} />}
+                element={
+                  <AccountPage
+                    setSessionDetails={setSessionDetails}
+                    setBasket={setBasket}
+                  />
+                }
               ></Route>
               <Route path="*" element={<RoutingError />}></Route>
             </Routes>
+            <Footer />
           </BasketContext.Provider>
         </ScreenWidthContext.Provider>
       </SessionContext.Provider>

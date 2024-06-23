@@ -8,7 +8,8 @@ const Register = (
   email: string,
   password: string,
   setSessionDetails: React.Dispatch<SetStateAction<User | null>>,
-  setLoginModalOpen: React.Dispatch<SetStateAction<boolean>>
+  setLoginModalOpen: React.Dispatch<SetStateAction<boolean>>,
+  setButtonText: React.Dispatch<SetStateAction<string>>
 ) => {
   const headers = {
     "Content-Type": "application/json",
@@ -30,7 +31,12 @@ const Register = (
       setLoginModalOpen(false);
     })
     .catch((err) => {
-      console.log(err);
+      const response = err.response;
+      const buttonText = response.data.errorMsg.message.split(".");
+      setButtonText(buttonText[0]);
+      setTimeout(() => {
+        setButtonText("Create account");
+      }, 2000);
     });
 };
 

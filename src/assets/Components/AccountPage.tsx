@@ -4,12 +4,14 @@ import { SessionContext } from "../../App";
 import { AnimatePresence, motion } from "framer-motion";
 import PostUpdateShipping from "../Hooks/PostUpdateShipping";
 import UpdatePassword from "../Hooks/UpdatePassword";
-import { User } from "../Types";
+import { User, BasketItem } from "../Types";
 
 const AccountPage = ({
   setSessionDetails,
+  setBasket,
 }: {
   setSessionDetails: React.Dispatch<React.SetStateAction<User | null>>;
+  setBasket: React.Dispatch<SetStateAction<BasketItem[]>>;
 }) => {
   const buttonStyle =
     "w-full mx-auto text-white bg-secondary-100 hover:opacity-80 focus:ring-4 focus:outline-none focus:ring-secondary-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-secondary-100 dark:hover:bg-secondary-100 dark:focus:ring-primary-800";
@@ -69,13 +71,14 @@ const AccountPage = ({
   const handleSignout = () => {
     setSessionDetails(null);
     localStorage.removeItem("token");
+    setBasket([]);
     navigate("/");
   };
 
   return (
     <motion.div
       className="
-        w-[70%] flex flex-col px-[2%] min-h-[70vh] py-4 my-8 m-auto bg-white rounded font-text
+        w-[70%] flex flex-col flex-1 px-[2%] py-4 my-8 m-auto bg-white rounded font-text
         max-[800px]:w-[95%]"
     >
       <div className="flex flex-col text-4xl font-text">

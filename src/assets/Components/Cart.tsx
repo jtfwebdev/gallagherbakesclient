@@ -88,7 +88,7 @@ const Cart = ({
             {screenWidth > 440 ? "Your shopping cart" : "Shopping cart"}
           </h2>
           <div
-            className="flex items-center gap-2"
+            className="flex items-center gap-2 hover:cursor-pointer hover:opacity-80"
             onClick={() => setCartModalOpen(false)}
           >
             <FontAwesomeIcon
@@ -109,7 +109,7 @@ const Cart = ({
                     return (
                       <AnimatePresence>
                         <CartProduct
-                          key={idx}
+                          key={"cart-full-screen" + idx}
                           products={products}
                           product={product}
                           basket={basket}
@@ -122,7 +122,7 @@ const Cart = ({
                     return (
                       <AnimatePresence>
                         <MobileCartProduct
-                          key={idx}
+                          key={"card-mobile" + idx}
                           products={products}
                           product={product}
                           basket={basket}

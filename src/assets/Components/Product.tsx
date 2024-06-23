@@ -90,6 +90,8 @@ const Product = ({
             max-[1024px]:w-[85%]
             max-[530px]:w-[100%] max-[530px]:px-0 max-[530px]:py-0 max-[530px]:my-0"
       >
+        {!product &&
+          (screenWidth > 768 ? <ProductSkeleton /> : <MobileSkeleton />)}
         {product && screenWidth > 768 ? (
           <FullScreenProduct
             product={product}
@@ -116,6 +118,39 @@ const Product = ({
 };
 
 export default Product;
+
+const MobileSkeleton = () => {
+  return (
+    <div className="flex flex-col h-fit justify-center mx-auto w-fit max-[530px]:pb-4 animate-pulse">
+      <>
+        <div className="w-[75vw] h-[75vw] max-[530px]:w-[100vw] max-[530px]:h-[100vw] bg-gray-200"></div>
+        <div className="mt-4 h-12 w-full bg-gray-200"></div>
+        <div className="mt-4 flex flex-col gap-1">
+          <div className="w-36 h-4 bg-gray-200"></div>
+          <div className="w-44 h-4 bg-gray-200"></div>
+          <div className="w-28 h-4 bg-gray-200"></div>
+        </div>
+      </>
+    </div>
+  );
+};
+
+const ProductSkeleton = () => {
+  return (
+    <div className="h-fit w-full bg-white flex animate-pulse">
+      <div className="w-[25vw] h-[25vw] bg-gray-200"></div>
+      <div className="ml-4 max-w-[60%] flex flex-col flex-1 h-inherit justify-start gap-16">
+        <div className="w-full h-10 rounded-xl bg-gray-200"></div>
+        <div className="flex flex-col gap-2">
+          <div className="w-64 h-4 rounded-xl bg-gray-200"></div>
+          <div className="w-36 h-4 rounded-xl bg-gray-200"></div>
+          <div className="w-44 h-4 rounded-xl bg-gray-200"></div>
+        </div>
+        <div className="w-32 h-12 rounded-xl bg-gray-200"></div>
+      </div>
+    </div>
+  );
+};
 
 const FullScreenProduct = ({
   product,
@@ -144,7 +179,12 @@ const FullScreenProduct = ({
         <div className="flex-1 mt-8">
           <p className="font-bold">Product description</p>
           <div dangerouslySetInnerHTML={{ __html: product.description }}></div>
+          <div
+            className="text-3xl mt-8"
+            dangerouslySetInnerHTML={{ __html: "£" + product.price }}
+          ></div>
         </div>
+
         <form className="flex items-center mt-4" onSubmit={handleAddToBasket}>
           <div className="flex items-center mr-4 gap-4">
             <FontAwesomeIcon
@@ -197,18 +237,22 @@ const MobileProduct = ({
         <>
           <div className="h-fit">
             <img
-              src={product[0].images[0].src}
+              src={product.images[0].src}
               alt=""
               className="w-[75vw] max-[530px]:w-full"
             />
           </div>
           <div className="mt-2 font-text text-secondary-100 flex flex-col flex-1 w-[75vw] max-[530px]:w-full max-[530px]:px-4">
             <h2 className="text-4xl pb-2 font-bold border-b-2 border-secondary-100 max-w-fit text-wrap">
-              {product[0].name}
+              {product.name}
             </h2>
             <div
               className="mt-4"
-              dangerouslySetInnerHTML={{ __html: product[0].description }}
+              dangerouslySetInnerHTML={{ __html: product.description }}
+            ></div>
+            <div
+              className="text-3xl mt-4"
+              dangerouslySetInnerHTML={{ __html: "£" + product.price }}
             ></div>
           </div>
           <form

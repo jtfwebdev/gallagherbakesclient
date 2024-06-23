@@ -221,7 +221,8 @@ const RegisterPanel = ({
         form.email,
         form.password,
         setSessionDetails,
-        setLoginModalOpen
+        setLoginModalOpen,
+        setButtonText
       );
     } else {
       setButtonText("Passwords must match!");
