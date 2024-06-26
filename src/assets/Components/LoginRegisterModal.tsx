@@ -11,11 +11,11 @@ const LoginRegisterModal = ({
   setLoginModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setSessionDetails: React.Dispatch<React.SetStateAction<User | null>>;
 }) => {
-  const loginPanelRef = useRef(null);
+  const loginPanelRef = useRef<any>(null);
   const [registerPanelActive, setRegisterPanelActive] = useState(false);
 
   useEffect(() => {
-    const handleClick = (event) => {
+    const handleClick = (event: any) => {
       if (
         loginPanelRef.current &&
         !loginPanelRef.current.contains(event.target)

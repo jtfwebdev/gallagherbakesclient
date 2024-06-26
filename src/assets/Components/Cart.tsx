@@ -38,9 +38,7 @@ const Cart = ({
   };
 
   useEffect(() => {
-    const handleClick = (
-      event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-    ) => {
+    const handleClick = (event: any) => {
       if (
         screenWidth > 800 &&
         cartPanelRef.current &&
