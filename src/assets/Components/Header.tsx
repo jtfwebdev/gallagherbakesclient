@@ -373,9 +373,10 @@ const SearchBar = ({ products }: { products: SingularProduct[] | null }) => {
               exit={{ opacity: 0, y: -30 }}
             >
               {searchResults[0] ? (
-                searchResults.map((product) => {
+                searchResults.map((product, idx) => {
                   return (
                     <Link
+                      key={"search-" + idx}
                       to={`/shop/${product.slug}`}
                       onClick={() => setSearchModalOpen(false)}
                     >

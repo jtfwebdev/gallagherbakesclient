@@ -107,9 +107,8 @@ const Cart = ({
               {screenWidth > 500
                 ? basket.map((product, idx) => {
                     return (
-                      <AnimatePresence>
+                      <AnimatePresence key={"cart-full-screen" + idx}>
                         <CartProduct
-                          key={"cart-full-screen" + idx}
                           products={products}
                           product={product}
                           basket={basket}
@@ -120,9 +119,8 @@ const Cart = ({
                   })
                 : basket.map((product, idx) => {
                     return (
-                      <AnimatePresence>
+                      <AnimatePresence key={"card-mobile" + idx}>
                         <MobileCartProduct
-                          key={"card-mobile" + idx}
                           products={products}
                           product={product}
                           basket={basket}
