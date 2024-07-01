@@ -128,9 +128,9 @@ const Cart = ({
                     );
                   })}
               <div className="flex flex-col flex-1 justify-end items-end pb-4">
-                <div>Subtotal: {basketTotal}</div>
+                <div>Subtotal: {parseFloat(basketTotal).toFixed(2)}</div>
                 <div>Postage & packaging: £{3.99}</div>
-                <div>{`Grand total: £${parseFloat(basketTotal) + 3.99}`}</div>
+                <div>{`Grand total: £${(parseFloat(basketTotal) + 3.99).toFixed(2)}`}</div>
                 <button
                   onClick={handleCheckout}
                   className="w-fit mt-4 text-white bg-secondary-100 hover:opacity-80 focus:ring-4 focus:outline-none focus:ring-secondary-100 font-medium rounded-lg text-lg px-10 py-2.5 text-center dark:bg-secondary-100 dark:hover:bg-secondary-100 dark:focus:ring-primary-800"

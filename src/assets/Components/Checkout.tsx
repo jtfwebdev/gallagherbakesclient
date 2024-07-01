@@ -26,10 +26,10 @@ const Checkout = ({
       {basket[0] ? (
         <div>
           <div className="flex flex-col w-full flex-1 justify-center items-start px-2 py-4 mb-4 border-b-2 border-secondary-100">
-            <div>Subtotal: £{basketTotal}</div>
+            <div>Subtotal: £{parseFloat(basketTotal).toFixed(2)}</div>
             <div>Postage & packaging: £{3.99}</div>
             <div className="font-bold text-xl">
-              Grand total: £{(parseInt(basketTotal) + 3.99).toFixed(2)}
+              Grand total: £{(parseFloat(basketTotal) + 3.99).toFixed(2)}
             </div>
           </div>
         </div>
@@ -173,6 +173,37 @@ const ShippingBilling = ({
     }
 
     setPaymentOptionsVisible(true);
+  };
+
+  const missingInformationPromptVars = {
+    fullScreen: {
+      initial: {
+        opacity: 0,
+        x: "100%",
+      },
+      animate: {
+        opacity: 1,
+        x: "120%",
+      },
+      exit: {
+        opacity: 0,
+        x: "50%",
+      },
+    },
+    mobileScreen: {
+      initial: {
+        opacity: 0,
+        y: "100%",
+      },
+      animate: {
+        opacity: 1,
+        y: "120%",
+      },
+      exit: {
+        opacity: 0,
+        y: "50%",
+      },
+    },
   };
 
   return (
@@ -359,7 +390,7 @@ const ShippingBilling = ({
             {(screenWidth > 1050 || screenWidth <= 900) && (
               <button
                 onClick={handleCopyShippingDetails}
-                className="bg-secondary-100 px-4 text-white rounded-lg hover:cursor-pointer hover:opacity-80 duration-200"
+                className="bg-secondary-100 px-4 py-2 text-white rounded-lg hover:cursor-pointer hover:opacity-80 duration-200"
               >
                 Same as shipping?
               </button>
@@ -540,7 +571,7 @@ const ShippingBilling = ({
         <div className="relative w-fit">
           <button
             onClick={handlePaymentOptions}
-            className="w-fit bg-secondary-100 mt-4 px-16 py-2 text-white rounded-lg hover:cursor-pointer hover:opacity-80 duration-200"
+            className="w-fit bg-secondary-100 my-4 px-16 py-2 text-white rounded-lg hover:cursor-pointer hover:opacity-80 duration-200"
           >
             Proceed to payment
           </button>
@@ -548,9 +579,21 @@ const ShippingBilling = ({
             {missingInformation && (
               <motion.div
                 className="absolute top-1/2 font-bold"
-                initial={{ opacity: 0, x: "100%" }}
-                animate={{ opacity: 1, x: "120%" }}
-                exit={{ opacity: 0, x: "50%" }}
+                initial={
+                  screenWidth > 670
+                    ? missingInformationPromptVars.fullScreen.initial
+                    : missingInformationPromptVars.mobileScreen.initial
+                }
+                animate={
+                  screenWidth > 670
+                    ? missingInformationPromptVars.fullScreen.animate
+                    : missingInformationPromptVars.mobileScreen.animate
+                }
+                exit={
+                  screenWidth > 670
+                    ? missingInformationPromptVars.fullScreen.exit
+                    : missingInformationPromptVars.mobileScreen.exit
+                }
               >
                 Please fill out all required fields.
               </motion.div>
