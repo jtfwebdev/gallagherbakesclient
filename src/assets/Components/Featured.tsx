@@ -40,7 +40,7 @@ const Featured = ({ products }: { products: SingularProduct[] | null }) => {
       className="
         w-[70%] mx-auto h-fit mt-12
         max-[900px]:w-[80%]
-        max-[750px]:w-[90%]
+        max-[750px]:w-[95%]
         max-[700px]:mt-8
         "
     >
@@ -61,7 +61,7 @@ const Featured = ({ products }: { products: SingularProduct[] | null }) => {
                 return (
                   <motion.div
                     key={idx}
-                    className="p-4 rounded flex flex-col hover:cursor-pointer"
+                    className="p-4 rounded flex flex-col hover:cursor-pointer max-[750px]:p-1"
                     initial="initial"
                     whileHover="hover"
                     onClick={() => handleClick(product.slug)}

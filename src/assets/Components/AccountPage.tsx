@@ -79,9 +79,10 @@ const AccountPage = ({
     <motion.div
       className="
         w-[70%] flex flex-col flex-1 px-[2%] py-4 my-8 m-auto bg-white rounded font-text
-        max-[800px]:w-[95%]"
+        max-[1000px]:w-[95%]
+        "
     >
-      <div className="flex flex-col text-4xl font-text">
+      <div className="flex flex-col text-4xl font-bold font-text max-[700px]:text-2xl">
         <div className="flex align-center justify-between gap-32 pb-4 border-b-2 border-secondary-100">
           <h2 className="inline">My Account</h2>
           {userDetails && (
@@ -91,8 +92,8 @@ const AccountPage = ({
           )}
         </div>
       </div>
-      <div className="flex mt-4">
-        <div className="w-[50%] pr-8 flex flex-col h-fit">
+      <div className="flex mt-4 max-[700px]:flex-col-reverse">
+        <div className="w-[50%] pr-8 flex flex-col h-fit max-[700px]:w-full">
           <div className="flex-1">
             <h4 className="text-xl">Recent orders</h4>
             <div>You haven't placed any orders yet.</div>
@@ -129,7 +130,7 @@ const AccountPage = ({
             </button>
           </div>
         </div>
-        <div className="w-[50%] pl-8">
+        <div className="w-[50%] pl-8 max-[700px]:pl-0 max-[700px]:mb-8">
           {userDetails && <div className="w-full">{getPanel()}</div>}
         </div>
       </div>
@@ -142,7 +143,7 @@ export default AccountPage;
 const ShippingInfo = ({ userDetails }: { userDetails: User | null }) => {
   return (
     <motion.div
-      className="w-full text-end font-text flex flex-col"
+      className="w-full text-end font-text flex flex-col max-[700px]:text-start"
       initial={{ x: -100, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       exit={{ x: 100, opacity: 0 }}
@@ -245,11 +246,11 @@ const UpdateDetails = ({
       initial={{ x: -100, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       exit={{ x: 100, opacity: 0 }}
-      className="text-end font-text w-full"
+      className="text-end font-text w-full max-[700px]:text-start"
     >
       <h2 className="text-lg font-bold">Update {field} information</h2>
       <form className="py-2" onSubmit={(e) => handleSubmit(e)}>
-        <div className="text-end flex flex-col items-end mb-2">
+        <div className="text-end flex flex-col items-end mb-2 max-[700px]:text-start max-[700px]:items-start">
           <label htmlFor="firstName" className="text-sm">
             First name
           </label>
@@ -268,11 +269,11 @@ const UpdateDetails = ({
                 contactNumber: prev.contactNumber,
               }))
             }
-            className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm text-end rounded-lg focus:ring-secondary-100 focus:border-secondary-100 block w-[50%] p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm text-end max-[700px]:text-start rounded-lg focus:ring-secondary-100 focus:border-secondary-100 block w-[50%] p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="text"
           />
         </div>
-        <div className="text-end flex flex-col items-end mb-2">
+        <div className="text-end flex flex-col items-end mb-2 max-[700px]:text-start max-[700px]:items-start">
           <label htmlFor="lastName" className="text-sm">
             Last name
           </label>
@@ -291,11 +292,11 @@ const UpdateDetails = ({
                 contactNumber: prev.contactNumber,
               }))
             }
-            className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm text-end rounded-lg focus:ring-secondary-100 focus:border-secondary-100 block w-[50%] p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm text-end max-[700px]:text-start rounded-lg focus:ring-secondary-100 focus:border-secondary-100 block w-[50%] p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="text"
           />
         </div>
-        <div className="text-end flex flex-col items-end mb-2">
+        <div className="text-end flex flex-col items-end mb-2 max-[700px]:text-start max-[700px]:items-start">
           <label htmlFor="address1" className="text-sm">
             Address line 1
           </label>
@@ -314,11 +315,11 @@ const UpdateDetails = ({
                 contactNumber: prev.contactNumber,
               }))
             }
-            className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm text-end rounded-lg focus:ring-secondary-100 focus:border-secondary-100 block w-[70%] p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm text-end max-[700px]:text-start rounded-lg focus:ring-secondary-100 focus:border-secondary-100 block w-[70%] p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="text"
           />
         </div>
-        <div className="text-end flex flex-col items-end mb-2">
+        <div className="text-end flex flex-col items-end mb-2 max-[700px]:text-start max-[700px]:items-start">
           <label htmlFor="address2" className="text-sm">
             Address line 2
           </label>
@@ -337,11 +338,11 @@ const UpdateDetails = ({
                 contactNumber: prev.contactNumber,
               }))
             }
-            className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm text-end rounded-lg focus:ring-secondary-100 focus:border-secondary-100 block w-[70%] p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm text-end max-[700px]:text-start rounded-lg focus:ring-secondary-100 focus:border-secondary-100 block w-[70%] p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="text"
           />
         </div>
-        <div className="text-end flex flex-col items-end mb-2">
+        <div className="text-end flex flex-col items-end mb-2 max-[700px]:text-start max-[700px]:items-start">
           <label htmlFor="city" className="text-sm">
             City
           </label>
@@ -360,11 +361,11 @@ const UpdateDetails = ({
                 contactNumber: prev.contactNumber,
               }))
             }
-            className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm text-end rounded-lg focus:ring-secondary-100 focus:border-secondary-100 block w-[70%] p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm text-end max-[700px]:text-start rounded-lg focus:ring-secondary-100 focus:border-secondary-100 block w-[70%] p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="text"
           />
         </div>
-        <div className="text-end flex flex-col items-end mb-2">
+        <div className="text-end flex flex-col items-end mb-2 max-[700px]:text-start max-[700px]:items-start">
           <label htmlFor="postcode" className="text-sm">
             Postcode
           </label>
@@ -383,11 +384,11 @@ const UpdateDetails = ({
                 contactNumber: prev.contactNumber,
               }))
             }
-            className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm text-end rounded-lg focus:ring-secondary-100 focus:border-secondary-100 block w-[70%] p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm text-end max-[700px]:text-start rounded-lg focus:ring-secondary-100 focus:border-secondary-100 block w-[70%] p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="text"
           />
         </div>
-        <div className="text-end flex flex-col items-end mb-2">
+        <div className="text-end flex flex-col items-end mb-2 max-[700px]:text-start max-[700px]:items-start">
           <label htmlFor="contactNumber" className="text-sm">
             Contact number
           </label>
@@ -406,7 +407,7 @@ const UpdateDetails = ({
                 contactNumber: e.target.value,
               }))
             }
-            className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm text-end rounded-lg focus:ring-secondary-100 focus:border-secondary-100 block w-[70%] p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm text-end max-[700px]:text-start rounded-lg focus:ring-secondary-100 focus:border-secondary-100 block w-[70%] p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="text"
           />
         </div>
@@ -468,11 +469,11 @@ const ChangePassword = ({
       initial={{ x: -100, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       exit={{ x: 100, opacity: 0 }}
-      className="w-full text-end font-text flex flex-col"
+      className="w-full text-end font-text flex flex-col max-[700px]:text-start"
     >
       <h2 className="text-lg font-bold">Change your password</h2>
       <form className="py-2" onSubmit={(e) => handleSubmit(e)}>
-        <div className="w-[100%] flex flex-col items-end mt-8">
+        <div className="w-[100%] flex flex-col items-end mt-8 max-[700px]:text-start max-[700px]:items-start">
           <label htmlFor="oldpassword" className="text-sm">
             Enter your current password
           </label>
@@ -489,10 +490,10 @@ const ChangePassword = ({
                 verifyNewPassword: prev.verifyNewPassword,
               }))
             }
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-base text-end rounded-lg focus:ring-secondary-100 focus:border-secondary-100 block w-[70%] p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-base text-end max-[700px]:text-start rounded-lg focus:ring-secondary-100 focus:border-secondary-100 block w-[70%] p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           />
         </div>
-        <div className="w-[100%] flex flex-col items-end mt-16">
+        <div className="w-[100%] flex flex-col items-end mt-16 max-[700px]:text-start max-[700px]:items-start">
           <label htmlFor="newpassword" className="text-sm">
             Enter your new password
           </label>
@@ -509,10 +510,10 @@ const ChangePassword = ({
                 verifyNewPassword: prev.verifyNewPassword,
               }))
             }
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-lg text-end rounded-lg focus:ring-secondary-100 focus:border-secondary-100 block w-[70%] p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-lg text-end max-[700px]:text-start rounded-lg focus:ring-secondary-100 focus:border-secondary-100 block w-[70%] p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           />
         </div>
-        <div className="w-[100%] flex flex-col items-end mt-2">
+        <div className="w-[100%] flex flex-col items-end mt-2 max-[700px]:text-start max-[700px]:items-start">
           <label htmlFor="verifynewpassword" className="text-sm">
             Verify your new password
           </label>
@@ -529,7 +530,7 @@ const ChangePassword = ({
                 verifyNewPassword: e.target.value,
               }))
             }
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-lg text-end rounded-lg focus:ring-secondary-100 focus:border-secondary-100 block w-[70%] p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-lg text-end max-[700px]:text-start rounded-lg focus:ring-secondary-100 focus:border-secondary-100 block w-[70%] p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           />
         </div>
         <motion.button
